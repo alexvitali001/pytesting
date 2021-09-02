@@ -23,6 +23,7 @@ jobs:
     - name: Execute Lint
       run: |
         pylint app/core/*.py --fail-under=3
+        sed -i -e 's|<source>.*<\/source>|<source>app/core<\/source>|g' coverage.xml
     - name: SonarQube Scanner
       uses: sonarsource/sonarqube-scan-action@master
       env:
