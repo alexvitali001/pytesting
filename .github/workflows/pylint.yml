@@ -19,7 +19,7 @@ jobs:
         pip install -r requirements.txt
     - name: Execute Test Cases
       run: |
-        pytest -v --runxfail
+        pytest -v 
     - name: Execute Lint
       run: |
         pylint app/core/*.py
