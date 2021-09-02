@@ -22,4 +22,4 @@ jobs:
         pytest -v 
     - name: Execute Lint
       run: |
-        pylint app/core/*.py
+        pylint app/core/*.py --fail-under=3
