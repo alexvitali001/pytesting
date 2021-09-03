@@ -30,6 +30,22 @@ jobs:
       with:
         name: TestArtifacts
         path: "tests.xml"
+    - name: Send mail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.office365.com
+        server_port: 587
+        username: Anuj.Sharma@pyramidci.com
+        password: ${{secrets.MAIL_PASSWORD}}
+        subject: Github Actions job result
+        to: anuj_sharma401@yahoo.com
+        from: Anuj.Sharma@pyramidci.com
+        # Optional whether this connection use TLS (default is true if server_port is 465)
+        secure: true
+        body: Build job of ${{github.repository}} completed successfully!
+        ignore_cert: true
+        attachments: "*.xml"
+        priority: high
     - name: Execute Lint
       run: |
         score=10
