@@ -1,7 +1,13 @@
 name: PythonCICD
 
-on: push
-
+on: 
+    push: 
+    workflow_dispatch:
+        inputs:
+          environment:
+            description: 'Define env name'     
+            required: true
+            default: 'prod'
 jobs:
   build:
 
@@ -24,6 +30,7 @@ jobs:
       run: |
         pylint app/core/*.py --fail-under=3
         sed -i -e 's|<source>.*<\/source>|<source>app/core<\/source>|g' coverage.xml
+        echo "Env: ${{ github.event.inputs.environment }}" 
     - name: SonarQube Scanner
       uses: sonarsource/sonarqube-scan-action@master
       env:
