@@ -26,12 +26,13 @@ jobs:
     - name: Execute Test Cases
       run: |
         pytest -v --junit-xml=tests.xml --cov-report=xml --cov=app/core
-    - uses: shallwefootball/s3-upload-action@master
+    - uses: ochanje210/s3-upload-action@master
       with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: "artifactsmaven"
-          source_dir: 'app'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_S3_BUCKET: artifactsmaven
+          SOURCE_DIR: 'app'
+          DEST_DIR: 'app'
     - name: Execute Lint
       run: |
         score=10
