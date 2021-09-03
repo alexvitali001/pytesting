@@ -4,10 +4,10 @@ on:
     push: 
     workflow_dispatch:
         inputs:
-          environment:
-            description: 'Define env name'     
+          score:
+            description: 'Pylint Score'     
             required: true
-            default: 'prod'
+            default: '10'
 jobs:
   build:
 
@@ -28,13 +28,6 @@ jobs:
         pytest -v --junit-xml=tests.xml --cov-report=xml --cov=app/core
     - name: Execute Lint
       run: |
-        pylint app/core/*.py --fail-under=3
-        sed -i -e 's|<source>.*<\/source>|<source>app/core<\/source>|g' coverage.xml
-        echo "Env: ${{ github.event.inputs.environment }}" 
-    - name: SonarQube Scanner
-      uses: sonarsource/sonarqube-scan-action@master
-      env:
-        # SonarQube server URL
-        SONAR_HOST_URL: http://54.146.193.237:9000
-        # Login or authentication token of a SonarQube user
-        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+        pylint app/core/*.py --fail-under=${{ github.event.inputs.score }}
+        sed -i -e 's|<source>.*<\/source>|<source>app/core<\/source>|g' coverage.xml 
+  
