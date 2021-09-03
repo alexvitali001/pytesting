@@ -28,6 +28,12 @@ jobs:
         pytest -v --junit-xml=tests.xml --cov-report=xml --cov=app/core
     - name: Execute Lint
       run: |
-        pylint app/core/*.py --fail-under=${{ github.event.inputs.score }}
+        score=10
+        if [ -z ${{ github.event.inputs.score }} ];
+            echo "Value Empty"
+        else
+            score=${{ github.event.inputs.score }}
+        fi
+        pylint app/core/*.py --fail-under=${score}
         sed -i -e 's|<source>.*<\/source>|<source>app/core<\/source>|g' coverage.xml 
   
