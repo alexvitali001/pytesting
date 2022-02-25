@@ -16,7 +16,7 @@ phases:
        - ls -lart
   post_build:
     commands:
-       - pytest --cov=core tests
+       - ""
 artifacts:
   files:
      - "**/*"
