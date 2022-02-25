@@ -1,0 +1,26 @@
+version: 0.2
+run-as: root
+env:
+  variables:
+      ENV_NAME: "DEV"
+phases:
+  install:
+    commands:
+      - "apt update"
+  pre_build:
+    commands:
+       - pip install -r requirements.txt
+  # build:
+    commands:
+       - pytest app/tests/
+       - ls -lart
+  post_build:
+    commands:
+       - pytest --cov=app/core app/tests
+artifacts:
+  files:
+     - "**/*"
+  name: artifact
+cache:
+  paths:
+     - "/root/.cache/pip"
